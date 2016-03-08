@@ -2,7 +2,7 @@
 
 Summary: Nagios plugins for IGTF CA distribution validation
 Name: nagios-plugins-igtf
-Version: 1.0.0
+Version: 1.1.0
 Release: 1%{?dist}
 License: ASL 2.0
 Group: Network/Monitoring
@@ -30,5 +30,7 @@ rm -rf $RPM_BUILD_ROOT
 %{dir}
 
 %changelog
+* Tue Mar 8 2016 Emir Imamagic <eimamagi@srce.hr> - 1.1.0-1%{?dist}
+- Added new CA probe
 * Fri Sep 18 2015 Emir Imamagic <eimamagi@srce.hr> - 1.0.0-1%{?dist}
 - Initial version of Nagios plugins for IGTF CA distribution validation
