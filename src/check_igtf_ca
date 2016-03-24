@@ -25,7 +25,7 @@ use constant DEFAULT_IGTF_LIST_URL => 'http://repository.egi.eu/sw/production/ca
 use constant DEFAULT_OBSOLETE_LIST_URL => 'http://repository.egi.eu/sw/production/cas/1/current/meta/ca-policy-egi-core.obsoleted-subjectdn';
 use constant DEFAULT_OLD_URL => 'http://lcg-ca.web.cern.ch/lcg-ca/distribution/ca-policy-lcg-OLD_VERSION-1/meta/';
 use constant DEFAULT_FILE_AGE => 24;
-use constant DEFAULT_CACHE_DIR => '/var/lib/nagios-plugins-igtf';
+use constant DEFAULT_CACHE_DIR => '/var/spool/nagios/nagios-plugins-igtf';
 use constant DEFAULT_HOST_CERT => '/etc/grid-security/hostcert.pem';
 use constant DEFAULT_HOST_KEY => '/etc/grid-security/hostkey.pem';
 

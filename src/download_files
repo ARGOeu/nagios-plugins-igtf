@@ -37,7 +37,7 @@ You may obtain a copy of the License at
 Copyright 2009 Emir Imamagic';
 use constant SHORTNAME => 'Download Files';
 use constant USAGE => "usage: $0 [ -v ] \n";
-use constant DEFAULT_DIR => '/var/lib/gridprobes-cadist/var/';
+use constant DEFAULT_DIR => '/var/spool/nagios/nagios-plugins-igtf';
 
 # Create Nagios::Plugin instance
 my $plugin = Nagios::Plugin->new (usage => USAGE,
@@ -51,7 +51,8 @@ $plugin->add_arg(
     spec => 'output-dir=s',
     help => "   Directory where files will be stored.
    (default: ".DEFAULT_DIR.")",
-    required => 0
+    required => 0,
+    default => DEFAULT_DIR,
 );
 $plugin->add_arg(
     spec => 'download-list=s',
