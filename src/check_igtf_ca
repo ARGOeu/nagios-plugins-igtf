@@ -235,6 +235,11 @@ $plugin->add_arg(
     required => 0,
     default => 8
 );
+$plugin->add_arg(
+    spec => 'occi=s',
+    help => "occi\n   OCCI URL.\n   (default: )",
+    required => 0
+);
 
 $plugin->getopts;
 
@@ -269,9 +274,11 @@ my $previousReleaseVersion;
 my $output = "";
 my $finalOutput = "";
 my $status;
+my $ngiFrance;
 
 $plugin->nagios_die("Invalid TCP port $port") if ( $port <= 0 or $port > 65535 );
 $plugin->nagios_die("Invalid host name $host") if $host !~ /^[a-z0-9_]+[-a-z0-9\._]+$/;
+$ngiFrance = 1 if ($host =~ /\.fr$/);
 
 my $ua = LWP::UserAgent->new(env_proxy=>1);
 $ua->agent(PROGNAME .'/'.VERSION);
@@ -298,7 +305,8 @@ foreach my $url (split(',',$plugin->opts->get('igtf-list-url'))) {
 if ($status != OK) {
     $output = " (error: $output)" if ($output);
     $plugin->nagios_die("Unable to get list of valid CA DNs".$output);
-} 
+}
+delete $currentValidDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
 
 # get list of obsolete CA DNs
 foreach my $url (split(',',$plugin->opts->get('obsolete-list-url'))) {
@@ -326,12 +334,26 @@ if ($status != OK) {
         $finalOutput .= "Unable to get a list of obsolete CA DNs from previous release".$output.". Previous version check will be skipped. ";
         undef $previousObsoleteDNs;
         undef $previousValidDNs;
+    } else {
+        delete $previousObsoleteDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
     } 
 }
 
+my $ssladd = "$host:$port";
+
+if ($plugin->opts->occi) {
+    my $agent = LWP::UserAgent->new;
+    my $req = HTTP::Request->new(GET => $plugin->opts->occi);
+    my $res = $agent->request($req);
+    my $keystone = $res->header('WWW-Authenticate');
+    if ( $keystone && $keystone =~ /\'http\S?:\/\/(\S+?)(\/)?\'/ ) {
+        $ssladd = $1;
+    }
+}
+
 my $inlist=0;
-print "Running command: /bin/echo 'GET /' | /usr/bin/openssl s_client -ign_eof -prexit -cert $cert -key $key -connect $host:$port 2>/dev/null" if ($plugin->opts->verbose);
-if (!open CONN,"/bin/echo 'GET /' | /usr/bin/openssl s_client -ign_eof -prexit -cert $cert -key $key -connect $host:$port 2>/dev/null |") {
+print "Running command: /bin/echo 0 | /usr/bin/openssl s_client -ign_eof -prexit -cert $cert -key $key -connect $ssladd 2>/dev/null" if ($plugin->opts->verbose);
+if (!open CONN,"/bin/echo 0 | /usr/bin/openssl s_client -ign_eof -prexit -cert $cert -key $key -connect $ssladd 2>/dev/null |") {
     $plugin->nagios_die("Unable to establish TLS connection with $host:$port.");
 }
 while (<CONN>) {
@@ -351,7 +373,6 @@ while (<CONN>) {
     };
 }
 close CONN;
-
 my @CAs;
 my $shouldCompare = 0;
 my $incorrectList = '';

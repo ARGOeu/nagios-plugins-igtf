@@ -2,7 +2,7 @@
 
 Summary: Nagios plugins for IGTF CA distribution validation
 Name: nagios-plugins-igtf
-Version: 1.2.0
+Version: 1.3.0
 Release: 1%{?dist}
 License: ASL 2.0
 Group: Network/Monitoring
@@ -33,6 +33,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0770,nagios,nagios) /var/spool/nagios/%{name}
 
 %changelog
+* Sat Apr 9 2016 Emir Imamagic <eimamagi@srce.hr> - 1.3.0-1%{?dist}
+- Added support for OCCI endpoints
+- Added exception for NGI_FRANCE
 * Thu Mar 24 2016 Emir Imamagic <eimamagi@srce.hr> - 1.2.0-1%{?dist}
 - Added spool directory for IGTF metadata files
 * Tue Mar 8 2016 Emir Imamagic <eimamagi@srce.hr> - 1.1.0-1%{?dist}
