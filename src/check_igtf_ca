@@ -335,7 +335,7 @@ if ($status != OK) {
         undef $previousObsoleteDNs;
         undef $previousValidDNs;
     } else {
-        delete $previousObsoleteDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
+        delete $previousValidDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
     } 
 }
 
@@ -348,6 +348,9 @@ if ($plugin->opts->occi) {
     my $keystone = $res->header('WWW-Authenticate');
     if ( $keystone && $keystone =~ /\'http\S?:\/\/(\S+?)(\/)?\'/ ) {
         $ssladd = $1;
+    }
+    if ( $ssladd !~ /\S+?:\d+/ ) {
+        $ssladd .= ':443';
     }
 }
 
