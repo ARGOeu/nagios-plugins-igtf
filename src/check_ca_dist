@@ -240,7 +240,8 @@ $plugin->add_arg(
     spec => 'ca-dir=s',
     help => "   Directory where CAs are installed.
    (default: \$X509_CERT_DIR, ".DEFAULT_CA_DIR.")",
-    required => 0
+    required => 0,
+    default => DEFAULT_CA_DIR
 );
 $plugin->add_arg(
     spec => 'release-url=s',
