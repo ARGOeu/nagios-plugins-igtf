@@ -1,4 +1,4 @@
-#! /usr/bin/perl -w
+#! /usr/bin/perl
 #
 # Probe for downloading list of URLs
 # Copyright (c) 2010 Emir Imamagic
@@ -99,7 +99,7 @@ foreach my $url (split(',',$plugin->opts->get('download-list'))) {
         $output .= "Extracting filename from URL $url failed. ";
         next;
     }
-    my $res = $ua->get($url, $filename);
+    my $res = $ua->get($url);
     if (!$res->is_success) {
         $status = WARNING;
         $output .= "Getting $url failed: ".$res->status_line . ". ";
