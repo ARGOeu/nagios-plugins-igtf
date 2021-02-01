@@ -2,7 +2,7 @@
 
 Summary: Nagios plugins for IGTF CA distribution validation
 Name: nagios-plugins-igtf
-Version: 1.4.0
+Version: 1.5.0
 Release: 1%{?dist}
 License: ASL 2.0
 Group: Network/Monitoring
@@ -33,6 +33,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0770,nagios,nagios) /var/spool/nagios/%{name}
 
 %changelog
+* Mon Feb 1 2021 Emir Imamagic <eimamagi@srce.hr> - 1.5.0-1%{?dist}
+- Changes from ARGO central instances
 * Mon Dec 19 2016 Emir Imamagic <eimamagi@srce.hr> - 1.4.0-1%{?dist}
 - Changes from ARGO central instances
 * Sat Apr 9 2016 Emir Imamagic <eimamagi@srce.hr> - 1.3.0-1%{?dist}

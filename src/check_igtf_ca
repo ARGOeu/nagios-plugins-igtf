@@ -307,6 +307,7 @@ if ($status != OK) {
     $plugin->nagios_die("Unable to get list of valid CA DNs".$output);
 }
 delete $currentValidDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
+delete $currentValidDNs->{'/C=IR/O=IPM/OU=GCG/CN=IRAN-GRID-G2 CA'} if $ngiFrance;
 
 # get list of obsolete CA DNs
 foreach my $url (split(',',$plugin->opts->get('obsolete-list-url'))) {
@@ -336,6 +337,7 @@ if ($status != OK) {
         undef $previousValidDNs;
     } else {
         delete $previousValidDNs->{'/C=IR/O=IPM/O=IRAN-GRID/CN=IRAN-GRID CA'} if $ngiFrance;
+        delete $previousValidDNs->{'/C=IR/O=IPM/OU=GCG/CN=IRAN-GRID-G2 CA'} if $ngiFrance;
     } 
 }
 
