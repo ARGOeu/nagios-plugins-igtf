@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/perl -w
 #
 # Probe for downloading list of URLs
 # Copyright (c) 2010 Emir Imamagic
